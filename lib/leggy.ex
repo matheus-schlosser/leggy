@@ -25,6 +25,7 @@ defmodule Leggy do
         }
       end
 
+      @spec prepare(module()) :: :ok | {:error, term()}
       def prepare(schema) do
         with_channel(fn ch ->
           exchange = exchange(schema)
@@ -60,7 +61,7 @@ defmodule Leggy do
         end)
       end
 
-      @doc false
+      @spec publish(struct()) :: :ok | {:error, term()}
       def publish(struct) do
         schema = struct.__struct__
         payload = Codec.encode!(struct)
@@ -76,6 +77,7 @@ defmodule Leggy do
         end)
       end
 
+      @spec get(module()) :: {:ok, struct()} | {:error, term()}
       def get(schema) do
         with_channel(fn ch ->
           case AMQP.Basic.get(ch, schema.__leggy_queue__(), no_ack: false) do
@@ -99,6 +101,7 @@ defmodule Leggy do
         end)
       end
 
+      @spec cast(module(), map() | keyword()) :: {:ok, struct()} | {:error, term()}
       def cast(schema, data) do
         Validator.cast(schema, data)
       end
