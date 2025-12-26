@@ -94,7 +94,7 @@ defmodule LeggyTest do
     assert match?({:error, {:invalid_type, :valid?, :not_boolean}}, result)
   end
 
-  #TODO: Check why is intermitently failing
+  # TODO: Check why is intermitently failing
   test "valid message is published and consumed, an invalid one is sent to DLQ" do
     RabbitRepo.with_channel_public(fn ch ->
       AMQP.Queue.purge(ch, EmailChangeMessage.__leggy_queue__())

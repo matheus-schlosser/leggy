@@ -2,7 +2,7 @@ defmodule Leggy.Schema do
   @moduledoc """
   Provides schema definition macros for message contracts in Leggy.
   """
-  
+
   defmacro __using__(_opts) do
     quote do
       import Leggy.Schema, only: [schema: 3, field: 2]
